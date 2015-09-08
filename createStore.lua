@@ -54,7 +54,7 @@ local function createStore(reducer, initialState)
   -- returns The current state tree of your application.
 
   function store.getState()
-  return currentState;
+    return currentState
   end
 
   -- Adds a change listener. It will be called any time an action is dispatched,
@@ -99,9 +99,10 @@ local function createStore(reducer, initialState)
     if (isDispatching) then
       error('Reducers may not dispatch actions.');
     end
-
+    
     local status, err = pcall(function ()
         isDispatching = true
+        
         currentState = currentReducer(currentState, action)
       end)
 

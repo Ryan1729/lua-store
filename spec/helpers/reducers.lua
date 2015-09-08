@@ -10,6 +10,8 @@ local function reduce (func, memo, tbl)
   for k, v in pairs(tbl) do
     memo = func(memo, v, k, tbl)
   end
+  
+  return memo
 end
 
 local function id(state) 
@@ -21,11 +23,13 @@ end
 
 function reducers.todos(state, action)
   state = state or {}
+
   if action.type == "ADD_TODO" then
-    return push(state, {
+    push(state, {
       id = id(state),
       text = action.text
     })
+    return state
   else
     return state
   end
@@ -33,11 +37,13 @@ end
 
 function reducers.todosReverse(state, action)
   state = state or {}
+
   if action.type == "ADD_TODO" then
-    return push(state, {
+    table.insert(state, 1, {
       id = id(state),
       text = action.text
-    }, 1)
+    })
+    return state
   else
     return state
   end
