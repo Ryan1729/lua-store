@@ -3,7 +3,17 @@ local pop = table.remove
 
 local reducers = {}
 
---     let's keep dependancies down by writng this ourselves ...
+--  let's keep dependancies down by writng a few things here ourselves ...
+local function copy(tbl)
+  local res = {}
+  
+  for k,v in pairs(tbl) do
+      res[k] = v
+  end
+  
+  return res
+end
+
 -- put the data, (what will change the most,) last to encourage partial application
 -- see "Hey Underscore, You're Doing It Wrong!" https://www.youtube.com/watch?v=m3svKOdZijA 
 local function reduce (func, memo, tbl)
@@ -22,30 +32,30 @@ local function id(state)
 end
 
 function reducers.todos(state, action)
-  state = state or {}
+  local newState = copy(state or {})
 
   if action.type == "ADD_TODO" then
-    push(state, {
+    push(newState, {
       id = id(state),
       text = action.text
     })
-    return state
+    return newState
   else
-    return state
+    return newState
   end
 end
 
 function reducers.todosReverse(state, action)
-  state = state or {}
+  local newState = copy(state or {})
 
   if action.type == "ADD_TODO" then
-    table.insert(state, 1, {
+    push(newState, 1, {
       id = id(state),
       text = action.text
     })
-    return state
+    return newState
   else
-    return state
+    return newState
   end
 end
 
