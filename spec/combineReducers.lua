@@ -8,41 +8,6 @@ local function getErrorMessage(key, action) {
   return "Reducer ".. key .. " returned undefined handling ".. actionName .. "." ..
     "To ignore an action, you must explicitly return the previous state."
 }
-
---local function verifyStateShape(initialState, currentState) {
---  local reducerKeys = Object.keys(currentState);
-
---  if (reducerKeys.length === 0) {
---    console.error(
---      'Store does not have a valid reducer. Make sure the argument passed ' +
---      'to combineReducers is an object whose values are reducers.'
---    );
---    return;
---  }
-
---  if (!isPlainObject(initialState)) {
---    console.error(
---      'initialState has unexpected type of "' +
---      ({}).toString.call(initialState).match(/\s([a-z|A-Z]+)/)[1] +
---      '". Expected initialState to be an object with the following ' +
---      "keys: "${reducerKeys.join('", "')}""
---    );
---    return;
---  }
-
---  local unexpectedKeys = Object.keys(initialState).filter(
---    key => reducerKeys.indexOf(key) < 0
---  );
-
---  if (unexpectedKeys.length > 0) {
---    console.error(
---      "Unexpected ${unexpectedKeys.length > 1 ? 'keys' : 'key'} " +
---      ""${unexpectedKeys.join('", "')}" in initialState will be ignored. " +
---      "Expected to find one of the known reducer keys instead: "${reducerKeys.join('", "')}""
---    );
---  }
---}
-
  
 -- Turns an object whose values are different reducer functions, into a single
 -- reducer function. It will call every child reducer, and gather their results
@@ -96,13 +61,6 @@ local function combineReducers(reducers)
       end
       return newState;
     }, {}, finalReducers);
-
-    -- this check was disabled in production in the js
-    -- not having both undefined and null makes this a little tricky
---    if not stateShapeVerified then
---      verifyStateShape(state, finalState);
---      stateShapeVerified = true;
---    }
 
     return finalState;
   end
