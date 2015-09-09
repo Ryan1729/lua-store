@@ -1,7 +1,7 @@
 local current_folder = (...):gsub('%.[^%.]+$', '')
 local reduce = require(current_folder .. ".reduce")
 local pick = require(current_folder .. ".pick")
-local ActionTypes = require ".ActionTypes"
+local ActionTypes = require(current_folder .. ".ActionTypes")
 local next = next
 local type = type
 
