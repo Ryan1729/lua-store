@@ -1,7 +1,7 @@
-local combineReducers = require("utils.combineReducers")
-local copy = require("utils.copy")
-local keys = require "utils.keys"
-local ActionTypes = require "ActionTypes"
+local combineReducers = require(".combineReducers")
+local copy = require(".copy")
+local keys = require ".keys"
+local ActionTypes = require ".ActionTypes"
 local push = table.insert
 local pop = table.remove
 

@@ -1,4 +1,5 @@
-local reduce = require("utils.reduce")
+local current_folder = (...):gsub('%.[^%.]+$', '')
+local reduce = require(current_folder .. ".reduce")
 
 -- Picks key-value pairs from an object where values satisfy a predicate.
 local function pick(obj, fn)

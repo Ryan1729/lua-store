@@ -1,6 +1,7 @@
-local reduce = require("utils.reduce")
-local pick = require("utils.pick")
-local ActionTypes = require "ActionTypes"
+local current_folder = (...):gsub('%.[^%.]+$', '')
+local reduce = require(current_folder .. ".reduce")
+local pick = require(current_folder .. ".pick")
+local ActionTypes = require ".ActionTypes"
 local next = next
 local type = type
 

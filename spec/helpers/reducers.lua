@@ -1,5 +1,5 @@
-local reduce = require("utils.reduce")
-local copy = require("utils.copy")
+local reduce = require(".reduce")
+local copy = require(".copy")
 local push = table.insert
 local pop = table.remove
 
