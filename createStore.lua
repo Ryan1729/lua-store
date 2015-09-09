@@ -1,7 +1,7 @@
 --This is a simple state container modelled on https://github.com/rackt/redux
-
-local ActionTypes = require "ActionTypes"
-local table_invert = require "utils.table_invert"
+local current_folder = (...):gsub('%.[^%.]+$', '')
+local ActionTypes = require (current_folder .. ".ActionTypes")
+local table_invert = require (current_folder .. ".utils.table_invert")
 
 local push = table.insert
 local pop = table.remove

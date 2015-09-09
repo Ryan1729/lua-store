@@ -38,3 +38,4 @@ store.dispatch({ type: 'decrement' })
 -- 1
 ```
 
+uses the [current_folder](http://kiki.to/blog/2014/04/12/rule-5-beware-of-multiple-files/) trick, but should hopefully "just work!"  
