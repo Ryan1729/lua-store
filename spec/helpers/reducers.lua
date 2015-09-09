@@ -1,19 +1,9 @@
 local reduce = require("utils.reduce")
+local copy = require("utils.copy")
 local push = table.insert
 local pop = table.remove
 
 local reducers = {}
-
---  let's keep dependancies down by writng a few things here ourselves ...
-local function copy(tbl)
-  local res = {}
-  
-  for k,v in pairs(tbl) do
-      res[k] = v
-  end
-  
-  return res
-end
 
 local function id(state) 
   state = state or {}

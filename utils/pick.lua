@@ -1,4 +1,4 @@
-local reduce = require("reduce")
+local reduce = require("utils.reduce")
 
 -- Picks key-value pairs from an object where values satisfy a predicate.
 local function pick(obj, fn)

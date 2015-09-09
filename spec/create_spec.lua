@@ -15,15 +15,15 @@ describe('createStore', function()
   end)
 
   it('should require a reducer function', function ()
-    assert.has_errors(function ()
+    assert.has_error(function ()
       createStore()
     end)
 
-    assert.has_errors(function ()
+    assert.has_error(function ()
       createStore('test')
     end)
 
-    assert.has_errors(function ()
+    assert.has_error(function ()
       createStore({})
     end)
 

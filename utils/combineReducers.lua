@@ -1,13 +1,16 @@
-local reduce = require("reduce")
+local reduce = require("utils.reduce")
+local pick = require("utils.pick")
 local ActionTypes = require "ActionTypes"
+local next = next
+local type = type
 
-local function getErrorMessage(key, action) {
+local function getErrorMessage(key, action) 
   local actionType = action and action.type;
   local actionName = actionType and tostring(actionType) or 'an action';
 
   return "Reducer ".. key .. " returned undefined handling ".. actionName .. "." ..
     "To ignore an action, you must explicitly return the previous state."
-}
+end
  
 -- Turns an object whose values are different reducer functions, into a single
 -- reducer function. It will call every child reducer, and gather their results
@@ -25,11 +28,18 @@ local function getErrorMessage(key, action) {
 
 
 local function combineReducers(reducers)
-  local finalReducers = pick(reducers, function (val) return type val == 'function' end);
+  
+  local finalReducers = pick(reducers, function (val) return type(val) == 'function' end);
 
+  --check if table is empty
+  --http://stackoverflow.com/a/1252776/4496839
+  if next(finalReducers) == nil then
+    error("No reducers found. Reducers must be functions, inside a single table.")
+  end
+  
   for key, reducer in pairs(finalReducers) do
   
-    if type reducer(nil, { type: ActionTypes.INIT }) == 'nil' then
+    if type(reducer(nil, { type = ActionTypes.INIT })) == 'nil' then
       error(
         "Reducer " .. key .. " returned undefined during initialization. " ..
         "If the state passed to the reducer is undefined, you must " ..
@@ -38,8 +48,9 @@ local function combineReducers(reducers)
       )
     end
 
-    local randomType = Math.random().toString(36).substring(7).split('').join('.');
-    if typeof reducer(nil, { type = randomType }) === 'nil' then
+    -- just making an random, unlikely to be used string 
+    local randomType = string.gsub(tostring(math.random() * 8), "(.).", "%1.")
+    if type( reducer(nil, { type = randomType })) == 'nil' then
       error(
         "Reducer " .. key .. " returned undefined when probed with a random type. " ..
         "Don't try to handle ${ActionTypes.INIT}. Instead, you must return the " ..
@@ -52,16 +63,16 @@ local function combineReducers(reducers)
 
   local stateShapeVerified
 
-  local function combination(state, action) {
+  local function combination(state, action)
     state = state or {}
-    local finalState = reduce(function (reducer, key)
-      local newState = reducer(state[key], action);
-      if typeof newState === 'nil' then
+    local finalState = reduce(function (result, reducer, key)
+      result[key] = reducer(state[key], action);
+
+      if type(result[key]) == 'nil' then
         error(getErrorMessage(key, action))
       end
-      return newState;
-    }, {}, finalReducers);
-
+      return result;
+    end, {}, finalReducers);
     return finalState;
   end
   
