@@ -7,7 +7,7 @@ The state is changed entirely through reducers, that is the kind of functions pa
 
 
 ```lua
-local store = require("store.createStore")
+local store = require("lua-store.createStore")
 
 -- This is a reducer, a pure function that takes a state and an action and returns a
 -- new state based on the action.
